@@ -29,8 +29,10 @@ object Synapse extends Controller {
 
     //join
     Brain.listBuf.append(this)
+    println("join "+"id:"+id+" tag:"+tag)
 
     def notify ( tag : String )( msg : String ) = {
+    println("notify "+"id:"+id+" tag:"+tag+" msg:"+msg)
       Brain.listBuf.foreach { i=>
         if(i.tag == tag){
           i.ws.push(msg)
@@ -39,7 +41,7 @@ object Synapse extends Controller {
     }
 
     def remove () = {
-      println("quit"+id)
+      println("quit"+id+" tag:"+tag)
       for(i <- 0 to Brain.listBuf.length) {
         if(Brain.listBuf(i).id==id){
           Brain.listBuf.remove(i)
@@ -49,7 +51,6 @@ object Synapse extends Controller {
     }
 
   }
-
 
   def ws(tag:String) = WebSocket.async[String] {
     request => {
