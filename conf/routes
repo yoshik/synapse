@@ -1,4 +1,4 @@
 GET     /                           controllers.Application.index
-GET     /synapse/:tag               controllers.Synapse.ws(tag:String)
+GET     /synapse                    controllers.Synapse.ws
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
