@@ -50,7 +50,7 @@ object Synapse extends Controller {
     }
 
     def notify ( tag : String )( msg : String ) = {
-    println("notify "+"id:"+id+" tag:"+tag+" msg:"+msg)
+      println("notify "+"id:"+id+" tag:"+tag+" msg:"+msg)
       PubNode.synapseList.foreach { i =>
         i.tagList.foreach{ j=>
           if(j == tag){
@@ -96,9 +96,9 @@ object Synapse extends Controller {
         kind.getOrElse("") match {
             case "notify" => synapse.notify(tag.getOrElse(""))(message.getOrElse(""))
             case "join" => synapse.join(tag.getOrElse(""))
-            case "leave" => {synapse.quit()}//TODO
-            case x:String => {println("json err:"+x)}
-            case _ =>{println("json err")}
+            case "leave" => synapse.quit()
+            case x:String => println("json err:"+x)
+            case _ => println("json err")
           }
       }).mapDone(_ => {
         synapse.quit()

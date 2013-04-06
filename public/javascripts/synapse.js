@@ -1,4 +1,5 @@
 function Synapse(receiveCallback) {
+
   const url = "ws://localhost:9000/synapse";
 
   if(!url){
@@ -17,13 +18,14 @@ function Synapse(receiveCallback) {
 
   var receive = receiveCallback;
   this.websocket.onmessage = function(event){
-    receive(event.data);
+    var result = JSON.parse(event.data);
+    receive(result);
   }
 
-  this.notify = function(tag,text){
+  this.notify = function(tag,send_data){
     if (tag) {
     var data = {}
-    data.message = text
+    data.message = JSON.stringify(send_data)
     data.tag = tag
     data.kind = 'notify'
     this.websocket.send(JSON.stringify(data))
