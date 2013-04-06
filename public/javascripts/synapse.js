@@ -3,17 +3,21 @@ function Synapse(receiveCallback) {
   const url = "ws://localhost:9000/synapse";
 
   if(!url){
-    console.log("url is not found")
+    console.log("url is not found");
   } else {
-    this.url = url
+    this.url = url;
   }
 
   if ('WebSocket' in window) {
-    this.websocket = new WebSocket(url)
+    this.websocket = new WebSocket(url);
   } else if ('MozWebSocket' in window) {
-    this.websocket = new MozWebSocket(url)
+    this.websocket = new MozWebSocket(url);
   } else {
-    console.log("WebSocket not supported")
+    console.log("WebSocket not supported");
+  }
+
+  this.websocket.onopen = function () {
+    SynapseStart();
   }
 
   var receive = receiveCallback;
@@ -24,30 +28,30 @@ function Synapse(receiveCallback) {
 
   this.notify = function(tag,send_data){
     if (tag) {
-    var data = {}
-    data.message = JSON.stringify(send_data)
-    data.tag = tag
-    data.kind = 'notify'
-    this.websocket.send(JSON.stringify(data))
-    }else{console.log("tag not found")}
+      var data = {}
+      data.message = JSON.stringify(send_data);
+      data.tag = tag;
+      data.kind = 'notify';
+      this.websocket.send(JSON.stringify(data));
+    }else{console.log("tag not found");}
   }
 
   this.join = function(tag){
     if (tag) {
-    var data = {}
-    data.tag = tag
-    data.kind = 'join'
-    this.websocket.send(JSON.stringify(data));
-    }else{console.log("tag not found")}
+      var data = {};
+      data.tag = tag;
+      data.kind = 'join';
+      this.websocket.send(JSON.stringify(data));
+    }else{console.log("tag not found");}
   }
 
   this.leave = function(tag){
     if (tag) {
-    var data = {}
-    data.tag = tag
-    data.kind = 'leave'
-    this.websocket.send(JSON.stringify(data));
-    }else{console.log("tag not found")}
+      var data = {};
+      data.tag = tag;
+      data.kind = 'leave';
+      this.websocket.send(JSON.stringify(data));
+    }else{console.log("tag not found");}
   }
 
   this.quit = function(){

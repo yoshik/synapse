@@ -1,4 +1,8 @@
 GET     /                           controllers.Application.index
+GET     /demo/simple                controllers.Application.demo_simple
+GET     /demo/chat                  controllers.Application.demo_chat
+
+
 GET     /synapse                    controllers.Synapse.ws
 
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
