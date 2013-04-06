@@ -2,48 +2,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Synapse</title>
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/synapse.js")" type="text/javascript"></script>
   </head>
+
   <body>
+  <input id="msg" type="text">
+  <input id="btn" type="button" value="send" onclick="onSend()">
+  <h4 id="rcv"></h4>
 
+  <script>
+    var callback = function (data){
+      var ele = document.createElement("div");
+      var str = document.createTextNode(data);
+      ele.appendChild(str);
+      document.getElementById("rcv").appendChild(ele);}
+    var s = new Synapse(callback);
 
-<input id="msg" type="text">
-<input id="btn" type="button" value="send" onclick="onSend()">
-<h2 id="room"></h2>
-
-<script type="text/javascript">
-function print(obj) {
-    var properties = '';
-    for (var prop in obj){
-        properties += "[" + prop + "]<br>\n  " + obj[prop] + "<br><br>\n\n";
+    var message = document.getElementById("msg");
+    function onSend(){
+      s.join("msg");
+      var send_data = {}
+      send_data.message=message.value;
+      send_data.kind="input-text";
+      s.notify("msg",JSON.stringify(send_data));
     }
-    document.write(properties,obj);
-}
-</script>
+  </script>
 
-<script>
-  const url = "ws://localhost:9000/synapse";
-  var SynapseRecieve = function (data){document.write(data);}
-  var s = new Synapse(url,SynapseRecieve);
-
-  var message = document.getElementById("msg");
-  function onSend(){
-    s.join("msg");
-    s.join("msg2");
-    s.join("msg3");
-    var send_data = {}
-    send_data.message=message.value;
-    send_data.kind="hoge";
-    s.notify("msg",JSON.stringify(send_data));
-  }
-
-</script>
-
-<scr>
-
-
-    </body>
+  </body>
 </html>

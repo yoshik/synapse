@@ -1,4 +1,5 @@
-function Synapse(url,receiveCallback) {
+function Synapse(receiveCallback) {
+  const url = "ws://localhost:9000/synapse";
 
   if(!url){
     console.log("url is not found")
