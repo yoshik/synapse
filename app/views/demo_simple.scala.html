@@ -21,17 +21,15 @@
       document.getElementById("rcv").appendChild(ele);
     }
 
-    var s = new Synapse(callback);
-    var SynapseStart = function(){
-            s.join("msg");
-    }
+    var synapse = new Synapse(callback);
+    function SynapseStart(){ synapse.join("msg"); }
 
     function onSend(){
       var message = document.getElementById("msg");
       var send_data = {}
       send_data.message=message.value;
       send_data.kind="input-text";
-      s.notify("msg",send_data);
+      synapse.notify("msg",send_data);
     }
   </script>
 
