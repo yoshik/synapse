@@ -22,6 +22,7 @@ function Synapse(receiveCallback) {
 
   var receive = receiveCallback;
   this.websocket.onmessage = function(event){
+    console.log(event.data);
     var result = JSON.parse(event.data);
     receive(result);
   }
